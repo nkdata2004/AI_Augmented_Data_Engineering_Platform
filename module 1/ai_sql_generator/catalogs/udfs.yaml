@@ -1,0 +1,10 @@
+last_synced_at: "2026-05-08T00:00:00Z"
+udfs:
+  - name: calculate_customer_revenue
+    signature: calculate_customer_revenue(customer_id integer, start_date date, end_date date) returns numeric
+    description: Returns total customer revenue for a customer within a date range.
+    example_usage: calculate_customer_revenue(c.customer_id, DATE '2026-01-01', DATE '2026-03-31')
+    preferred_for:
+      - revenue
+      - customer revenue
+      - total sales

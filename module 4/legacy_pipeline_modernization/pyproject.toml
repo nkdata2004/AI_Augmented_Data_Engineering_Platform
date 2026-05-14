@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "legacy-pipeline-modernization"
+version = "0.1.0"
+description = "POC for analyzing and modernizing legacy data pipelines"
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml>=6.0.1",
+    "sqlglot>=23.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[project.scripts]
+legacy-modernizer = "legacy_modernizer.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

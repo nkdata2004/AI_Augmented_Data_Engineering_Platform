@@ -1,0 +1,146 @@
+{
+  "inputs": {
+    "source_csv": "examples/source_customers.csv",
+    "target_csv": "examples/target_customers.csv"
+  },
+  "overall_confidence": 0.8719,
+  "confidence_breakdown": {
+    "average_column_mapping_confidence": 0.8514,
+    "key_detection_confidence": 1.0,
+    "low_confidence_mapping_penalty": 0.0167
+  },
+  "key_mapping": {
+    "source_column": "cust_id",
+    "target_column": "CustomerID",
+    "confidence": 1.0,
+    "method": "auto_detected"
+  },
+  "column_mappings": [
+    {
+      "source_column": "cust_id",
+      "target_column": "CustomerID",
+      "levenshtein": 1.0,
+      "embedding": 1.0,
+      "heuristic": 1.0,
+      "confidence": 1.0,
+      "needs_review": false
+    },
+    {
+      "source_column": "email",
+      "target_column": "email_address",
+      "levenshtein": 0.4167,
+      "embedding": 0.9846,
+      "heuristic": 0.55,
+      "confidence": 0.8342,
+      "needs_review": false
+    },
+    {
+      "source_column": "full_name",
+      "target_column": "customer_name",
+      "levenshtein": 0.4167,
+      "embedding": 0.9401,
+      "heuristic": 0.3833,
+      "confidence": 0.7781,
+      "needs_review": false
+    },
+    {
+      "source_column": "last_order_date",
+      "target_column": "lastOrderDate",
+      "levenshtein": 1.0,
+      "embedding": 1.0,
+      "heuristic": 1.0,
+      "confidence": 1.0,
+      "needs_review": false
+    },
+    {
+      "source_column": "status",
+      "target_column": "account_status",
+      "levenshtein": 0.4615,
+      "embedding": 0.9069,
+      "heuristic": 0.55,
+      "confidence": 0.7865,
+      "needs_review": false
+    },
+    {
+      "source_column": "total_spend",
+      "target_column": "lifetime_value",
+      "levenshtein": 0.0769,
+      "embedding": 0.9863,
+      "heuristic": 0.05,
+      "confidence": 0.7094,
+      "needs_review": true
+    }
+  ],
+  "summary": {
+    "source_row_count": 4,
+    "target_row_count": 4,
+    "compared_row_count": 3,
+    "new_row_count": 1,
+    "deleted_row_count": 1,
+    "modified_row_count": 2,
+    "value_mismatch_count": 3,
+    "match_rate": 0.3333,
+    "unmapped_source_columns": [],
+    "unmapped_target_columns": [
+      "loyalty_tier"
+    ]
+  },
+  "row_diffs": {
+    "new_rows": [
+      "1005"
+    ],
+    "deleted_rows": [
+      "1004"
+    ],
+    "modified_rows": [
+      {
+        "key": "1002",
+        "differences": [
+          {
+            "source_column": "email",
+            "target_column": "email_address",
+            "source_value": "ben@example.com",
+            "target_value": "ben.new@example.com",
+            "mapping_confidence": 0.8342
+          },
+          {
+            "source_column": "total_spend",
+            "target_column": "lifetime_value",
+            "source_value": 75.0,
+            "target_value": 90.0,
+            "mapping_confidence": 0.7094
+          }
+        ]
+      },
+      {
+        "key": "1003",
+        "differences": [
+          {
+            "source_column": "status",
+            "target_column": "account_status",
+            "source_value": "inactive",
+            "target_value": "closed",
+            "mapping_confidence": 0.7865
+          }
+        ]
+      }
+    ]
+  },
+  "human_review_flags": [
+    {
+      "source_column": "total_spend",
+      "target_column": "lifetime_value",
+      "levenshtein": 0.0769,
+      "embedding": 0.9863,
+      "heuristic": 0.05,
+      "confidence": 0.7094,
+      "needs_review": true
+    }
+  ],
+  "assumptions": [
+    "CSV files fit in memory for the take-home demo; production path would stream or use a distributed engine.",
+    "Semantic similarity uses BGE through sentence-transformers; the first run may download the model locally.",
+    "For production-scale datasets, embeddings should be cached per normalized column name.",
+    "Auto key detection favors uniqueness, overlap, and ID-like names; critical workflows should pass --key-column explicitly."
+  ]
+}

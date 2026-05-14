@@ -1,0 +1,23 @@
+dialect: postgres
+last_synced_at: "2026-05-08T00:00:00Z"
+tables:
+  customers:
+    description: Customer master table.
+    columns:
+      customer_id: integer
+      customer_name: text
+      region: text
+      segment: text
+  orders:
+    description: Customer order fact table.
+    columns:
+      order_id: integer
+      customer_id: integer
+      order_date: date
+      amount: numeric
+      status: text
+relationships:
+  - left_table: customers
+    left_column: customer_id
+    right_table: orders
+    right_column: customer_id

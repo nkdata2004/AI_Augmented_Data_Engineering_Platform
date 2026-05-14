@@ -1,0 +1,96 @@
+{
+  "artifact_confidence": 0.572,
+  "node_confidence": {
+    "config::customer_orders_daily": 0.85,
+    "raw.customers": 0.9,
+    "raw.orders": 0.9,
+    "mart.customer_order_summary": 0.92,
+    "dag::customer_orders_dag": 0.88,
+    "task::load_customers": 0.76,
+    "task::transform_orders": 0.76,
+    "python::load_customers": 0.78,
+    "function::extract_customers": 0.72,
+    "function::transform_customers": 0.72,
+    "function::load_customers": 0.72,
+    "transform::transform_orders": 0.9
+  },
+  "edge_confidence": [
+    {
+      "source": "raw.customers",
+      "target": "config::customer_orders_daily",
+      "relation": "declared_in",
+      "confidence": 0.9
+    },
+    {
+      "source": "raw.orders",
+      "target": "config::customer_orders_daily",
+      "relation": "declared_in",
+      "confidence": 0.9
+    },
+    {
+      "source": "config::customer_orders_daily",
+      "target": "mart.customer_order_summary",
+      "relation": "declares_sink",
+      "confidence": 0.9
+    },
+    {
+      "source": "task::load_customers",
+      "target": "task::transform_orders",
+      "relation": "runs_before",
+      "confidence": 0.82
+    },
+    {
+      "source": "dag::customer_orders_dag",
+      "target": "python etl/load_customers.py",
+      "relation": "references_file",
+      "confidence": 0.68
+    },
+    {
+      "source": "dag::customer_orders_dag",
+      "target": "psql -f sql/transform_orders.sql",
+      "relation": "references_file",
+      "confidence": 0.68
+    },
+    {
+      "source": "python::load_customers",
+      "target": "function::extract_customers",
+      "relation": "contains",
+      "confidence": 0.72
+    },
+    {
+      "source": "python::load_customers",
+      "target": "function::transform_customers",
+      "relation": "contains",
+      "confidence": 0.72
+    },
+    {
+      "source": "python::load_customers",
+      "target": "function::load_customers",
+      "relation": "contains",
+      "confidence": 0.72
+    },
+    {
+      "source": "raw.customers",
+      "target": "transform::transform_orders",
+      "relation": "feeds",
+      "confidence": 0.86
+    },
+    {
+      "source": "raw.orders",
+      "target": "transform::transform_orders",
+      "relation": "feeds",
+      "confidence": 0.86
+    },
+    {
+      "source": "transform::transform_orders",
+      "target": "mart.customer_order_summary",
+      "relation": "writes",
+      "confidence": 0.92
+    }
+  ],
+  "penalties": {
+    "gap_count": 8,
+    "gap_penalty": 0.24
+  },
+  "interpretation": "Low: requires substantial human validation"
+}

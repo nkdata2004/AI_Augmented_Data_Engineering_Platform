@@ -1,0 +1,17 @@
+flowchart TD
+    A[Submit legacy pipeline folder] --> B[Classify artifacts]
+    B --> C[Parse SQL]
+    B --> D[Parse Python ETL/DAG]
+    B --> E[Parse YAML config]
+    C --> F[Build inventory graph]
+    D --> F
+    E --> F
+    F --> G[Infer lineage]
+    F --> H[Detect gaps]
+    F --> I[Score confidence]
+    G --> J[Generate Mermaid data flow]
+    H --> K[Generate gap report]
+    I --> L[Generate confidence report]
+    F --> M[Draft migration plan]
+    M --> N[Human review gates]
+    N --> O[dbt models + Prefect flow]

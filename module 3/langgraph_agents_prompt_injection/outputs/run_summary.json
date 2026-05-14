@@ -1,0 +1,11 @@
+{
+  "task": "Build email validator",
+  "verdict": "APPROVED",
+  "revision_count": 0,
+  "artifacts": [
+    "developer_notebook.ipynb",
+    "generated_module.py",
+    "test_generated_module.py",
+    "review_report.md"
+  ]
+}

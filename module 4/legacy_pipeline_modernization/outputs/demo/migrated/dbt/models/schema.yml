@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: raw
+    database: snowflake_database # HUMAN REVIEW: replace with real database
+    schema: raw
+    tables:
+      - name: customers
+      - name: orders
+
+models:
+  - name: transform_orders
+    description: Migrated customer order summary model from legacy SQL.
+    columns:
+      - name: customer_id
+        tests: [not_null]
+      - name: customer_name
+      - name: order_count
+      - name: total_order_amount

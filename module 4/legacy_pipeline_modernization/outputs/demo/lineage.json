@@ -1,0 +1,126 @@
+{
+  "edges": [
+    {
+      "source": "raw.customers",
+      "target": "config::customer_orders_daily",
+      "relation": "declared_in",
+      "confidence": 0.9,
+      "human_review_required": false
+    },
+    {
+      "source": "raw.orders",
+      "target": "config::customer_orders_daily",
+      "relation": "declared_in",
+      "confidence": 0.9,
+      "human_review_required": false
+    },
+    {
+      "source": "config::customer_orders_daily",
+      "target": "mart.customer_order_summary",
+      "relation": "declares_sink",
+      "confidence": 0.9,
+      "human_review_required": false
+    },
+    {
+      "source": "task::load_customers",
+      "target": "task::transform_orders",
+      "relation": "runs_before",
+      "confidence": 0.82,
+      "human_review_required": false
+    },
+    {
+      "source": "dag::customer_orders_dag",
+      "target": "python etl/load_customers.py",
+      "relation": "references_file",
+      "confidence": 0.68,
+      "human_review_required": true
+    },
+    {
+      "source": "dag::customer_orders_dag",
+      "target": "psql -f sql/transform_orders.sql",
+      "relation": "references_file",
+      "confidence": 0.68,
+      "human_review_required": true
+    },
+    {
+      "source": "python::load_customers",
+      "target": "function::extract_customers",
+      "relation": "contains",
+      "confidence": 0.72,
+      "human_review_required": false
+    },
+    {
+      "source": "python::load_customers",
+      "target": "function::transform_customers",
+      "relation": "contains",
+      "confidence": 0.72,
+      "human_review_required": false
+    },
+    {
+      "source": "python::load_customers",
+      "target": "function::load_customers",
+      "relation": "contains",
+      "confidence": 0.72,
+      "human_review_required": false
+    },
+    {
+      "source": "raw.customers",
+      "target": "transform::transform_orders",
+      "relation": "feeds",
+      "confidence": 0.86,
+      "human_review_required": false
+    },
+    {
+      "source": "raw.orders",
+      "target": "transform::transform_orders",
+      "relation": "feeds",
+      "confidence": 0.86,
+      "human_review_required": false
+    },
+    {
+      "source": "transform::transform_orders",
+      "target": "mart.customer_order_summary",
+      "relation": "writes",
+      "confidence": 0.92,
+      "human_review_required": false
+    }
+  ],
+  "column_lineage": [
+    {
+      "transform": "transform::transform_orders",
+      "output_column": "customer_id",
+      "source_expression": "c.customer_id",
+      "confidence": 0.82,
+      "human_review_required": false
+    },
+    {
+      "transform": "transform::transform_orders",
+      "output_column": "customer_name",
+      "source_expression": "c.customer_name",
+      "confidence": 0.82,
+      "human_review_required": false
+    },
+    {
+      "transform": "transform::transform_orders",
+      "output_column": "order_count",
+      "source_expression": "COUNT(o.order_id)",
+      "confidence": 0.64,
+      "human_review_required": true
+    },
+    {
+      "transform": "transform::transform_orders",
+      "output_column": "total_order_amount",
+      "source_expression": "SUM(o.order_amount)",
+      "confidence": 0.64,
+      "human_review_required": true
+    },
+    {
+      "transform": "transform::transform_orders",
+      "output_column": "latest_order_timestamp",
+      "source_expression": "MAX(o.order_timestamp)",
+      "confidence": 0.64,
+      "human_review_required": true
+    }
+  ],
+  "known_gaps": []
+}

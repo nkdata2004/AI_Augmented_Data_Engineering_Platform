@@ -1,0 +1,37 @@
+flowchart LR
+    N_config__customer_orders_daily["config::customer_orders_daily
+(config, conf=0.85)"]
+    N_raw_customers[("raw.customers
+(source, conf=0.90)")]
+    N_raw_orders[("raw.orders
+(source, conf=0.90)")]
+    N_mart_customer_order_summary[["mart.customer_order_summary
+(sink, conf=0.92)"]]
+    N_dag__customer_orders_dag{"dag::customer_orders_dag
+(task, conf=0.88)"}
+    N_task__load_customers{"task::load_customers
+(task, conf=0.76)"}
+    N_task__transform_orders{"task::transform_orders
+(task, conf=0.76)"}
+    N_python__load_customers["python::load_customers
+(transform, conf=0.78)"]
+    N_function__extract_customers["function::extract_customers
+(transform, conf=0.72)"]
+    N_function__transform_customers["function::transform_customers
+(transform, conf=0.72)"]
+    N_function__load_customers["function::load_customers
+(transform, conf=0.72)"]
+    N_transform__transform_orders["transform::transform_orders
+(transform, conf=0.90)"]
+    N_raw_customers -->|declared_in 0.90| N_config__customer_orders_daily
+    N_raw_orders -->|declared_in 0.90| N_config__customer_orders_daily
+    N_config__customer_orders_daily -->|declares_sink 0.90| N_mart_customer_order_summary
+    N_task__load_customers -->|runs_before 0.82| N_task__transform_orders
+    N_dag__customer_orders_dag -->|references_file 0.68| N_python_etl_load_customers_py
+    N_dag__customer_orders_dag -->|references_file 0.68| N_psql__f_sql_transform_orders_sql
+    N_python__load_customers -->|contains 0.72| N_function__extract_customers
+    N_python__load_customers -->|contains 0.72| N_function__transform_customers
+    N_python__load_customers -->|contains 0.72| N_function__load_customers
+    N_raw_customers -->|feeds 0.86| N_transform__transform_orders
+    N_raw_orders -->|feeds 0.86| N_transform__transform_orders
+    N_transform__transform_orders -->|writes 0.92| N_mart_customer_order_summary

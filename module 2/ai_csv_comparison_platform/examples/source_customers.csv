@@ -1,0 +1,5 @@
+cust_id,full_name,email,total_spend,last_order_date,status
+1001,Ana Gomez,ana@example.com,120.50,2026-01-10,active
+1002,Ben Lee,ben@example.com,75.00,2026-01-12,active
+1003,Carla Singh,carla@example.com,220.20,2026-01-15,inactive
+1004,David Kim,david@example.com,15.00,2026-01-20,active

@@ -1,0 +1,5 @@
+CustomerID,customer_name,email_address,lifetime_value,lastOrderDate,account_status,loyalty_tier
+1001,Ana Gomez,ana@example.com,120.50,2026-01-10,active,gold
+1002,Ben Lee,ben.new@example.com,90.00,2026-01-12,active,silver
+1003,Carla Singh,carla@example.com,220.20,2026-01-15,closed,bronze
+1005,Eva Rossi,eva@example.com,45.00,2026-01-25,active,silver

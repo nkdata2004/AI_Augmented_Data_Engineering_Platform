@@ -1,0 +1,12 @@
+pipeline_name: customer_orders_daily
+owner: data-platform@example.com
+schedule: "0 2 * * *"
+volume_hints:
+  raw.customers: "~50k rows/day"
+  raw.orders: "~1.2M rows/day"
+sources:
+  - raw.customers
+  - raw.orders
+sinks:
+  - mart.customer_order_summary
+sla_minutes: 90

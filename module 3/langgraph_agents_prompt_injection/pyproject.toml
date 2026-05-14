@@ -1,0 +1,12 @@
+[project]
+name = "module3-langgraph-agents"
+version = "0.1.0"
+description = "LangGraph multi-agent prompt engineering workflow for Module 3"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 88

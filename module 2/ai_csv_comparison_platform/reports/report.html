@@ -1,0 +1,106 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>CSV Comparison Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; color: #202124; }
+    h1, h2 { margin-bottom: 8px; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 16px 0; }
+    .low { color: #b00020; font-weight: bold; }
+    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    th, td { border: 1px solid #ddd; padding: 8px; font-size: 14px; }
+    th { background: #f4f4f4; text-align: left; }
+    code { background: #f5f5f5; padding: 2px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>CSV Comparison Report</h1>
+  <div class="card">
+    <h2>Summary</h2>
+    <p><b>Overall confidence:</b> 0.8719</p>
+    <p><b>Match rate:</b> 0.3333</p>
+    <p><b>New rows:</b> 1 | <b>Deleted rows:</b> 1 | <b>Modified rows:</b> 2</p>
+    <p><b>Value mismatches:</b> 3 | <b>Unmapped source columns:</b> 0 | <b>Unmapped target columns:</b> 1</p>
+  </div>
+
+  <div class="card">
+    <h2>Key Detection</h2>
+    <p><code>cust_id</code> → <code>CustomerID</code>, confidence 1.0, method auto_detected</p>
+  </div>
+
+  <div class="card">
+    <h2>Column Mapping</h2>
+    <table>
+      <tr><th>Source</th><th>Target</th><th>Confidence</th><th>Levenshtein</th><th>Embedding</th><th>Heuristic</th><th>Review</th></tr>
+      
+      <tr>
+        <td>cust_id</td><td>CustomerID</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td class="">False</td>
+      </tr>
+      
+      <tr>
+        <td>email</td><td>email_address</td><td>0.8342</td><td>0.4167</td><td>0.9846</td><td>0.55</td><td class="">False</td>
+      </tr>
+      
+      <tr>
+        <td>full_name</td><td>customer_name</td><td>0.7781</td><td>0.4167</td><td>0.9401</td><td>0.3833</td><td class="">False</td>
+      </tr>
+      
+      <tr>
+        <td>last_order_date</td><td>lastOrderDate</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td class="">False</td>
+      </tr>
+      
+      <tr>
+        <td>status</td><td>account_status</td><td>0.7865</td><td>0.4615</td><td>0.9069</td><td>0.55</td><td class="">False</td>
+      </tr>
+      
+      <tr>
+        <td>total_spend</td><td>lifetime_value</td><td>0.7094</td><td>0.0769</td><td>0.9863</td><td>0.05</td><td class="low">True</td>
+      </tr>
+      
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Modified Rows</h2>
+    <table>
+      <tr><th>Key</th><th>Differences</th></tr>
+      
+      <tr><td>1002</td><td><pre>[
+  {
+    "mapping_confidence": 0.8342,
+    "source_column": "email",
+    "source_value": "ben@example.com",
+    "target_column": "email_address",
+    "target_value": "ben.new@example.com"
+  },
+  {
+    "mapping_confidence": 0.7094,
+    "source_column": "total_spend",
+    "source_value": 75.0,
+    "target_column": "lifetime_value",
+    "target_value": 90.0
+  }
+]</pre></td></tr>
+      
+      <tr><td>1003</td><td><pre>[
+  {
+    "mapping_confidence": 0.7865,
+    "source_column": "status",
+    "source_value": "inactive",
+    "target_column": "account_status",
+    "target_value": "closed"
+  }
+]</pre></td></tr>
+      
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>New / Deleted Rows</h2>
+    <p><b>New keys:</b> ['1005']</p>
+    <p><b>Deleted keys:</b> ['1004']</p>
+  </div>
+</body>
+</html>

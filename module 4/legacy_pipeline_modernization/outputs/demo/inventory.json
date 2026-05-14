@@ -1,0 +1,456 @@
+{
+  "nodes": {
+    "config::customer_orders_daily": {
+      "name": "config::customer_orders_daily",
+      "type": "config",
+      "evidence": [
+        {
+          "path": "configs\\pipeline.yaml",
+          "detail": "YAML config",
+          "confidence": 0.85,
+          "line": null
+        }
+      ],
+      "metadata": {
+        "pipeline_name": "customer_orders_daily",
+        "owner": "data-platform@example.com",
+        "schedule": "0 2 * * *",
+        "volume_hints": {
+          "raw.customers": "~50k rows/day",
+          "raw.orders": "~1.2M rows/day"
+        },
+        "sources": [
+          "raw.customers",
+          "raw.orders"
+        ],
+        "sinks": [
+          "mart.customer_order_summary"
+        ],
+        "sla_minutes": 90
+      },
+      "confidence": 0.85
+    },
+    "dag::customer_orders_dag": {
+      "name": "dag::customer_orders_dag",
+      "type": "task",
+      "evidence": [
+        {
+          "path": "dags\\customer_orders_dag.py",
+          "detail": "Python artifact parsed with ast",
+          "confidence": 0.88,
+          "line": null
+        }
+      ],
+      "metadata": {
+        "functions": [],
+        "calls": [
+          "DAG",
+          "datetime",
+          "BashOperator",
+          "BashOperator"
+        ]
+      },
+      "confidence": 0.88
+    },
+    "function::extract_customers": {
+      "name": "function::extract_customers",
+      "type": "transform",
+      "evidence": [
+        {
+          "path": "etl\\load_customers.py",
+          "detail": "Python function definition",
+          "confidence": 0.72,
+          "line": null
+        },
+        {
+          "path": "etl\\load_customers.py",
+          "detail": "Function name indicates extraction",
+          "confidence": 0.62,
+          "line": null
+        }
+      ],
+      "metadata": {},
+      "confidence": 0.72
+    },
+    "function::load_customers": {
+      "name": "function::load_customers",
+      "type": "transform",
+      "evidence": [
+        {
+          "path": "etl\\load_customers.py",
+          "detail": "Python function definition",
+          "confidence": 0.72,
+          "line": null
+        },
+        {
+          "path": "etl\\load_customers.py",
+          "detail": "Function name indicates loading",
+          "confidence": 0.62,
+          "line": null
+        }
+      ],
+      "metadata": {},
+      "confidence": 0.72
+    },
+    "function::transform_customers": {
+      "name": "function::transform_customers",
+      "type": "transform",
+      "evidence": [
+        {
+          "path": "etl\\load_customers.py",
+          "detail": "Python function definition",
+          "confidence": 0.72,
+          "line": null
+        }
+      ],
+      "metadata": {},
+      "confidence": 0.72
+    },
+    "mart.customer_order_summary": {
+      "name": "mart.customer_order_summary",
+      "type": "sink",
+      "evidence": [
+        {
+          "path": "configs\\pipeline.yaml",
+          "detail": "Declared YAML sink",
+          "confidence": 0.9,
+          "line": null
+        },
+        {
+          "path": "sql\\transform_orders.sql",
+          "detail": "SQL CREATE TABLE/INSERT target",
+          "confidence": 0.92,
+          "line": null
+        }
+      ],
+      "metadata": {},
+      "confidence": 0.92
+    },
+    "python::load_customers": {
+      "name": "python::load_customers",
+      "type": "transform",
+      "evidence": [
+        {
+          "path": "etl\\load_customers.py",
+          "detail": "Python artifact parsed with ast",
+          "confidence": 0.78,
+          "line": null
+        }
+      ],
+      "metadata": {
+        "functions": [
+          "extract_customers",
+          "transform_customers",
+          "load_customers"
+        ],
+        "calls": [
+          "pd.read_csv",
+          "df.rename",
+          "str.strip",
+          "create_engine",
+          "df.to_sql"
+        ]
+      },
+      "confidence": 0.78
+    },
+    "raw.customers": {
+      "name": "raw.customers",
+      "type": "source",
+      "evidence": [
+        {
+          "path": "configs\\pipeline.yaml",
+          "detail": "Declared YAML source",
+          "confidence": 0.9,
+          "line": null
+        },
+        {
+          "path": "sql\\transform_orders.sql",
+          "detail": "SQL FROM/JOIN reference",
+          "confidence": 0.86,
+          "line": null
+        }
+      ],
+      "metadata": {},
+      "confidence": 0.9
+    },
+    "raw.orders": {
+      "name": "raw.orders",
+      "type": "source",
+      "evidence": [
+        {
+          "path": "configs\\pipeline.yaml",
+          "detail": "Declared YAML source",
+          "confidence": 0.9,
+          "line": null
+        },
+        {
+          "path": "sql\\transform_orders.sql",
+          "detail": "SQL FROM/JOIN reference",
+          "confidence": 0.86,
+          "line": null
+        }
+      ],
+      "metadata": {},
+      "confidence": 0.9
+    },
+    "task::load_customers": {
+      "name": "task::load_customers",
+      "type": "task",
+      "evidence": [
+        {
+          "path": "dags\\customer_orders_dag.py",
+          "detail": "Airflow dependency task",
+          "confidence": 0.76,
+          "line": null
+        }
+      ],
+      "metadata": {},
+      "confidence": 0.76
+    },
+    "task::transform_orders": {
+      "name": "task::transform_orders",
+      "type": "task",
+      "evidence": [
+        {
+          "path": "dags\\customer_orders_dag.py",
+          "detail": "Airflow dependency task",
+          "confidence": 0.76,
+          "line": null
+        }
+      ],
+      "metadata": {},
+      "confidence": 0.76
+    },
+    "transform::transform_orders": {
+      "name": "transform::transform_orders",
+      "type": "transform",
+      "evidence": [
+        {
+          "path": "sql\\transform_orders.sql",
+          "detail": "SQL transformation script",
+          "confidence": 0.9,
+          "line": null
+        }
+      ],
+      "metadata": {
+        "file": "sql\\transform_orders.sql",
+        "selected_columns": [
+          {
+            "output_column": "customer_id",
+            "expression": "c.customer_id",
+            "confidence": "high"
+          },
+          {
+            "output_column": "customer_name",
+            "expression": "c.customer_name",
+            "confidence": "high"
+          },
+          {
+            "output_column": "order_count",
+            "expression": "COUNT(o.order_id)",
+            "confidence": "medium"
+          },
+          {
+            "output_column": "total_order_amount",
+            "expression": "SUM(o.order_amount)",
+            "confidence": "medium"
+          },
+          {
+            "output_column": "latest_order_timestamp",
+            "expression": "MAX(o.order_timestamp)",
+            "confidence": "medium"
+          }
+        ]
+      },
+      "confidence": 0.9
+    }
+  },
+  "edges": [
+    {
+      "source": "raw.customers",
+      "target": "config::customer_orders_daily",
+      "relation": "declared_in",
+      "evidence": [
+        {
+          "path": "configs\\pipeline.yaml",
+          "detail": "Source declared in config",
+          "confidence": 0.9,
+          "line": null
+        }
+      ],
+      "confidence": 0.9
+    },
+    {
+      "source": "raw.orders",
+      "target": "config::customer_orders_daily",
+      "relation": "declared_in",
+      "evidence": [
+        {
+          "path": "configs\\pipeline.yaml",
+          "detail": "Source declared in config",
+          "confidence": 0.9,
+          "line": null
+        }
+      ],
+      "confidence": 0.9
+    },
+    {
+      "source": "config::customer_orders_daily",
+      "target": "mart.customer_order_summary",
+      "relation": "declares_sink",
+      "evidence": [
+        {
+          "path": "configs\\pipeline.yaml",
+          "detail": "Sink declared in config",
+          "confidence": 0.9,
+          "line": null
+        }
+      ],
+      "confidence": 0.9
+    },
+    {
+      "source": "task::load_customers",
+      "target": "task::transform_orders",
+      "relation": "runs_before",
+      "evidence": [
+        {
+          "path": "dags\\customer_orders_dag.py",
+          "detail": "Airflow >> dependency",
+          "confidence": 0.82,
+          "line": null
+        }
+      ],
+      "confidence": 0.82
+    },
+    {
+      "source": "dag::customer_orders_dag",
+      "target": "python etl/load_customers.py",
+      "relation": "references_file",
+      "evidence": [
+        {
+          "path": "dags\\customer_orders_dag.py",
+          "detail": "String literal references python etl/load_customers.py",
+          "confidence": 0.68,
+          "line": null
+        }
+      ],
+      "confidence": 0.68
+    },
+    {
+      "source": "dag::customer_orders_dag",
+      "target": "psql -f sql/transform_orders.sql",
+      "relation": "references_file",
+      "evidence": [
+        {
+          "path": "dags\\customer_orders_dag.py",
+          "detail": "String literal references psql -f sql/transform_orders.sql",
+          "confidence": 0.68,
+          "line": null
+        }
+      ],
+      "confidence": 0.68
+    },
+    {
+      "source": "python::load_customers",
+      "target": "function::extract_customers",
+      "relation": "contains",
+      "evidence": [
+        {
+          "path": "etl\\load_customers.py",
+          "detail": "Function defined in artifact",
+          "confidence": 0.72,
+          "line": null
+        }
+      ],
+      "confidence": 0.72
+    },
+    {
+      "source": "python::load_customers",
+      "target": "function::transform_customers",
+      "relation": "contains",
+      "evidence": [
+        {
+          "path": "etl\\load_customers.py",
+          "detail": "Function defined in artifact",
+          "confidence": 0.72,
+          "line": null
+        }
+      ],
+      "confidence": 0.72
+    },
+    {
+      "source": "python::load_customers",
+      "target": "function::load_customers",
+      "relation": "contains",
+      "evidence": [
+        {
+          "path": "etl\\load_customers.py",
+          "detail": "Function defined in artifact",
+          "confidence": 0.72,
+          "line": null
+        }
+      ],
+      "confidence": 0.72
+    },
+    {
+      "source": "raw.customers",
+      "target": "transform::transform_orders",
+      "relation": "feeds",
+      "evidence": [
+        {
+          "path": "sql\\transform_orders.sql",
+          "detail": "SQL source feeds transformation",
+          "confidence": 0.86,
+          "line": null
+        }
+      ],
+      "confidence": 0.86
+    },
+    {
+      "source": "raw.orders",
+      "target": "transform::transform_orders",
+      "relation": "feeds",
+      "evidence": [
+        {
+          "path": "sql\\transform_orders.sql",
+          "detail": "SQL source feeds transformation",
+          "confidence": 0.86,
+          "line": null
+        }
+      ],
+      "confidence": 0.86
+    },
+    {
+      "source": "transform::transform_orders",
+      "target": "mart.customer_order_summary",
+      "relation": "writes",
+      "evidence": [
+        {
+          "path": "sql\\transform_orders.sql",
+          "detail": "SQL transformation writes target",
+          "confidence": 0.92,
+          "line": null
+        }
+      ],
+      "confidence": 0.92
+    }
+  ],
+  "schedules": {
+    "config::customer_orders_daily": "0 2 * * *",
+    "dag::customer_orders_dag": "0 2 * * *"
+  },
+  "volume_hints": {
+    "raw.customers": "~50k rows/day",
+    "raw.orders": "~1.2M rows/day"
+  },
+  "gaps": [
+    "Broken or unresolved file reference: dag::customer_orders_dag -> python etl/load_customers.py",
+    "Broken or unresolved file reference: dag::customer_orders_dag -> psql -f sql/transform_orders.sql",
+    "mart.customer_order_summary: missing explicit documentation/description",
+    "python::load_customers: missing explicit documentation/description",
+    "function::extract_customers: missing explicit documentation/description",
+    "function::transform_customers: missing explicit documentation/description",
+    "function::load_customers: missing explicit documentation/description",
+    "transform::transform_orders: missing explicit documentation/description"
+  ]
+}
