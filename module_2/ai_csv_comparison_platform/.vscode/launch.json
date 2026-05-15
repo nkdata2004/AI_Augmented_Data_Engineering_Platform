@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    {
+      "name": "Debug CSV Comparator",
+      "type": "python",
+      "request": "launch",
+      "module": "src.csv_compare.cli",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--source",
+        "examples/source_customers.csv",
+        "--target",
+        "examples/target_customers.csv",
+        "--output-dir",
+        "reports"
+      ]
+    }
+  ]
+}

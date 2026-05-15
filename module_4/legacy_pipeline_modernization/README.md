@@ -18,7 +18,7 @@ The implementation intentionally uses deterministic static analysis first and re
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
+python -m pip install -e ".[dev]"
 
 python -m legacy_modernizer.cli analyze \
   --input examples/legacy_pipeline \

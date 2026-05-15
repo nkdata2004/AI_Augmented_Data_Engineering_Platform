@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Legacy Pipeline Modernizer",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "legacy_modernizer.cli",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "analyze",
+        "--input",
+        "examples/legacy_pipeline",
+        "--target",
+        "Migrate from Airflow + raw SQL to dbt + Prefect on Snowflake",
+        "--output",
+        "outputs/demo"
+      ]
+    }
+  ]
+}

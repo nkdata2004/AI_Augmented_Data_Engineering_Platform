@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Module 3 Orchestrator",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "src.agent_platform.orchestrator",
+      "args": [
+        "--task",
+        "Build email validator"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ]
+}

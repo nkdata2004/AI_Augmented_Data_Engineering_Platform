@@ -14,8 +14,11 @@ __pycache__/
 build/
 dist/
 
-# IDE/editor files
-.vscode/
+# VS Code
+.vscode/*
+!.vscode/launch.json
+
+# IntelliJ / JetBrains
 .idea/
 
 # OS files
